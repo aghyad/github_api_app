@@ -1,0 +1,83 @@
+<h1>Search for GitHub Repos</h1>
+
+<% if notice || alert %>
+  <p class="notice"><%= notice %></p>
+  <p class="alert"><%= alert %></p>
+<% end %>
+<br>
+
+<%= form_tag('/search', method: 'get') do %>
+  <%= label_tag(:q, "Search GitHub for:") %>
+  <%= text_field_tag(:q) %>
+  <%= submit_tag("Search") %>
+<% end %>
+
+<% unless @error %>
+  <hr>
+  <% if @search_keyword %>
+    <table>
+      <tr>
+        <td><%= "Searching GitHub repos for: #{@search_keyword.inspect}" %></td>
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <% if @items.present? || @search_keyword.present? %>
+          <td>
+            <%= form_tag('/search', method: 'get') do %>
+              <%= label_tag "Filter by Language:" %>
+              <%= select_tag :language, options_from_collection_for_select(@language_filters, 'to_s', 'to_s') %>
+              <%= hidden_field_tag :q, @search_keyword %>
+              <%= submit_tag("Filter") %>
+            <% end %>
+          </td>
+        <% end %>
+
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+
+        <td><%= link_to_if (@page.to_i > 1), '<< Previous', @previous_url %></td>
+        <% @numeric_pagination_urls.each do |url| %>
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+          <td><%= link_to_unless (url[0].to_i == @page.to_i), url[0], url[1] %></td>
+        <% end %>
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td><%= link_to 'Next >>', @next_url %></td>
+      </tr>
+    </table>
+    <br>
+  <% end %>
+
+  <table class="table table-striped">
+    <th>Repo Name</th>
+    <th>Repo Owner</th>
+    <th>Language</th>
+    <th>
+      <% if @stars_ordering_url.blank? %>
+        Stars
+      <% else %>
+        <%= link_to @stars_ordering_url[0], @stars_ordering_url[1] %>
+      <% end %>
+    </th>
+    <th>Watchers</th>
+    <th>Forks</th>
+    <th>Open Issues</th>
+    <th>Private?</th>
+    <th>Description</th>
+    <% @items.each do |item| %>
+      <tr>
+        <td><%= link_to item['full_name'], item['html_url'], target: '_blank' %></td>
+        <td><%= link_to item['owner']['login'], "http://github.com/#{item['owner']['login']}", target: '_blank' %></td>
+        <td><%= item["language"] %></td>
+        <td><%= item["stargazers_count"] %></td>
+        <td><%= item["watchers_count"] %></td>
+        <td><%= item["forks_count"] %></td>
+        <td><%= item["open_issues_count"] %></td>
+        <td><%= item["private"] %></td>
+        <td><%= item['description'] %></td>
+      </tr>
+    <% end if @items.present? %>
+  </table>
+
+  <% if @items.blank? %>
+    <h5>No repos were found</h5>
+  <% end %>
+
+<% end %>
