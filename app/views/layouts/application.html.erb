@@ -32,7 +32,7 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="background-color:#702; margin-left:-17px; width: 104%;">
         <ul class="nav navbar-nav" style="margin-left: 18%;">
-          <li><%= link_to "Home", '/', :style=>"font-size:17px; color:#eee; text-shadow: 1px 1px #902;" %></li>
+          <li><%= link_to "About", home_about_path, :style=>"font-size:17px; color:#eee; text-shadow: 1px 1px #902;" %></li>
           <li><%= link_to "Search", search_path, :style=>"font-size:17px; color:#eee; text-shadow: 1px 1px #902;" %></li>
           <% if user_signed_in? %>
             <li><%= link_to "Hello #{current_user.email} (not you?)", destroy_user_session_path, method: :delete, :style=>"font-size:17px; color:#eee; text-shadow: 1px 1px #902;" %></li>

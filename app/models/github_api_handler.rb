@@ -32,7 +32,7 @@ class GithubApiHandler
     puts "\n\n%%%%%\nfetching remote data\n%%%%%\n\n"
     remote_api_response = self.class.get('/search/repositories', @options)
     puts remote_api_response.inspect
-
+    
     if remote_api_response
       remote_api_parsed_response = remote_api_response.parsed_response
 

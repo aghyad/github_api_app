@@ -1,0 +1,39 @@
+<h1>About This Application</h1>
+
+<% if notice || alert %>
+  <p class="notice"><%= notice %></p>
+  <p class="alert"><%= alert %></p>
+<% end %>
+
+<br>
+
+<p>Using the GitHub Search API, implement a web app that queries repositories based on user input and displays the following data / options:</p>
+
+<h4>Business Requirements:</h4>
+<ul>
+  <li> A list of the results along with the programming language for that repo</li>
+  <li> A filtering of the results based on the languages returned (can use AJAX or make separate requests)</li>
+  <li> Sort by stars in either asc or desc order</li>
+  <li> Pagination, if available</li>
+  <li> Persist the user's information upon logging in to the app in a DB</li>
+</ul>
+
+<h4>Technical Requirements:</h4>
+<ul>
+  <li> Use Ruby on Rails as backend app.</li>
+  <li> Push code to GitHub public repo</li>
+  <li> While the GitHub search API is public and can be used without authentication, you must authenticate your user and make authenticated requests. Use oauth.</li>
+  <li> It must be deployed to either a micro EC2 instance or Heroku Instance</li>
+  <li> You must persist some data in a database. Ideally, this would be the user's information that comes back from their API after authenticating with OAuth 2</li>
+</ul>
+
+<p>Everything else is up to you and you are free to use any tools / libaries you need to get the job done.</p>
+
+<h4>Things we look for:</h4>
+<ul>
+  <li> Code quality</li>
+  <li> Specs / Tests</li>
+  <li> Use of tools / gems / etc</li>
+  <li> Speed of completion (On average, people get it knocked out in 3 days max)</li>
+  <li> Anything you think will make your app special. Extra credit is always good.</li>
+</ul>
