@@ -29,13 +29,13 @@
         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 
-        <td><%= link_to_if (@page.to_i > 1), '<< Previous', @previous_url %></td>
-        <% @numeric_pagination_urls.each do |url| %>
+        <td><%= link_to_if (@page.to_i > 1), '<< Previous', previous_url(@search_options) %></td>
+        <% numeric_pagination_urls(@search_options).each do |url| %>
           <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
           <td><%= link_to_unless (url[0].to_i == @page.to_i), url[0], url[1] %></td>
         <% end %>
         <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        <td><%= link_to 'Next >>', @next_url %></td>
+        <td><%= link_to 'Next >>', next_url(@search_options) %></td>
       </tr>
     </table>
     <br>
@@ -45,13 +45,7 @@
     <th>Repo Name</th>
     <th>Repo Owner</th>
     <th>Language</th>
-    <th>
-      <% if @stars_ordering_url.blank? %>
-        Stars
-      <% else %>
-        <%= link_to @stars_ordering_url[0].html_safe, @stars_ordering_url[1] %>
-      <% end %>
-    </th>
+    <th><%= build_stars_text_and_url(@search_options) %></th>
     <th>Watchers</th>
     <th>Forks</th>
     <th>Open Issues</th>

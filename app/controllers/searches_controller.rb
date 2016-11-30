@@ -11,23 +11,11 @@ class SearchesController < ApplicationController
       @language_filter = params[:language]
       @sort = params[:sort]
       @order = params[:order]
+      @search_options = build_search_options
 
       @language_filters = nil
       @items = nil
       @error = nil
-
-      ### Pagination vars (MOVE TO HELPER)
-      @next_url = build_next_url(@search_keyword, @page, @language_filter, @sort, @order)
-      @numeric_pagination_urls = [].tap do |arr|
-        (1..10).each { |num| arr << [num, build_numeric_url(@search_keyword, num, @language_filter, @sort, @order)] }
-      end
-      @previous_url = build_previous_url(@search_keyword, @page, @language_filter, @sort, @order)
-
-      ### Symbols for ordering by "stars" (MOVE TO HELPER)
-      @stars_ordering_url = [
-        (@order=='desc' ? 'Stars [Desc]' : 'Stars [Asc]'),
-        build_numeric_url(@search_keyword, 1, @language_filter, @sort, (@order=='desc' ? 'asc' : 'desc'))
-      ]
 
       ### now, we do the search:
       if search_query_present?
@@ -76,6 +64,16 @@ class SearchesController < ApplicationController
     30
   end
 
+  def build_search_options
+    {
+      search_keyword: @search_keyword,
+      page: @page,
+      language_filter: @language_filter,
+      sort: @sort,
+      order: @order
+    }
+  end
+
   def filter_language(items, language_filter)
     language_filter = '' if language_filter.downcase == 'all languages'
     return items unless language_filter.present?
@@ -85,35 +83,5 @@ class SearchesController < ApplicationController
   def extract_language_filters(items)
     return [''] if items.blank?
     ['All Languages', items.map{|m| m['language']}.uniq.reject{|m| m.blank?}].flatten
-  end
-
-  def build_next_url(q, page, filter='', sort='', order='')
-    url = "/search?"
-    url << "q=#{q}"
-    url << "&page=#{page.to_i + 1}"
-    url << "&language=#{filter}"
-    url << "&sort=#{sort}"
-    url << "&order=#{order}"
-    url
-  end
-
-  def build_numeric_url(q, page, filter='', sort='', order='')
-    url = "/search?"
-    url << "q=#{q}"
-    url << "&page=#{page.to_i}"
-    url << "&language=#{filter}"
-    url << "&sort=#{sort}"
-    url << "&order=#{order}"
-    url
-  end
-
-  def build_previous_url(q, page, filter='', sort='', order='')
-    url = "/search?"
-    url << "q=#{q}"
-    url << "&page=#{page.to_i - 1}"
-    url << "&language=#{filter}"
-    url << "&sort=#{sort}"
-    url << "&order=#{order}"
-    url
   end
 end
