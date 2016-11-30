@@ -1,26 +1,3 @@
 <h1>Request Authentication with GitHub</h1>
-
 <%= render 'shared/notices_and_alerts' %>
-<br>
-
 <%= button_to 'Login with GitHub Now', user_github_omniauth_authorize_path %>
-
-<!-- <a href="javascript:poptastic('<%= #user_github_omniauth_authorize_path
-%>');">Login with GitHub Now</a> -->
-
-<!-- <script>
-  function poptastic(url) {
-    var newWindow = window.open(url, 'name', 'height=800,width=650');
-    if (window.focus) {
-      newWindow.focus();
-    }
-  }
-</script> -->
-
-<!-- <iframe src="<%= #user_github_omniauth_authorize_path
-%>" width="100%" height="500" frameborder="0" allowfullscreen sandbox>
-  <p> <a href="<%= #user_github_omniauth_authorize_path
-  %>">
-    Fallback link for browsers that don't support iframes
-  </a> </p>
-</iframe> -->

@@ -38,7 +38,7 @@ class GithubApiHandler
 
       if remote_api_parsed_response['message'].present?
         puts remote_api_parsed_response['message'].inspect
-        return { 'ok'=> false, 'message'=> remote_api_parsed_response['message'], 'data'=> {} }
+        return { 'ok'=> false, 'message'=> "Error while connecting and searching GitHub API: \"#{remote_api_parsed_response['message']}\"", 'data'=> {} }
       end
 
       # - then save the fetched data in redis (with expiration time of 5 mins), and name the key "<username>_search" and pass it back (or return nil if exceptions)
