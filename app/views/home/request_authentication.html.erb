@@ -1,11 +1,7 @@
 <h1>Request Authentication with GitHub</h1>
 
-<% if notice || alert %>
-  <p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p>
-<% end %>
-
-<br><br>
+<%= render 'shared/notices_and_alerts' %>
+<br>
 
 <%= button_to 'Login with GitHub Now', user_github_omniauth_authorize_path %>
 

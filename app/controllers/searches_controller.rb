@@ -62,13 +62,14 @@ class SearchesController < ApplicationController
   end
 
   def filter_language(items, language_filter)
+    language_filter = '' if language_filter.downcase == 'all languages'
     return items unless language_filter.present?
     items.select! {|x| x['language'] == language_filter }
   end
 
   def extract_language_filters(items)
     return [''] if items.blank?
-    ['', items.map{|m| m['language']}.uniq.reject{|m| m.blank?}].flatten
+    ['All Languages', items.map{|m| m['language']}.uniq.reject{|m| m.blank?}].flatten
   end
 
   def build_next_url(q, page, filter='', sort='', order='')

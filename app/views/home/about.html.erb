@@ -1,11 +1,6 @@
 <h1>About This Application</h1>
 
-<% if notice || alert %>
-  <p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p>
-<% end %>
-
-<br>
+<%= render 'shared/notices_and_alerts' %>
 
 <p>Using the GitHub Search API, implement a web app that queries repositories based on user input and displays the following data / options:</p>
 
