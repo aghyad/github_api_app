@@ -8,7 +8,14 @@ class SearchesController < ApplicationController
 
       ### now, we do the search:
       if search_query_present?
-        search_handler = Search.new(@search_keyword, @order, per_page, @page, current_user)
+        search_handler = Search.new({
+          q: @search_keyword,
+          user: current_user,
+          order: @order,
+          per_page: per_page,
+          page: @page
+        })
+
         search_handler.perform
         @language_filters = search_handler.extract_language_filters
         @items = search_handler.by_language(@language_filter)

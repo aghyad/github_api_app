@@ -2,8 +2,8 @@ class Search
   attr_reader :search_handler, :parsed_response,
               :response_data_items, :response_error_message
 
-  def initialize(search_keyword, order, per_page, page, user)
-    @search_handler = GithubApiHandler.new(search_keyword, user.email, user.encrypted_password, :stars, order.to_sym, per_page, page)
+  def initialize(options = {})
+    @search_handler = GithubApiHandler.new(options)
     @parsed_response = {}
     @response_data_items = []
     @response_error_message = nil
