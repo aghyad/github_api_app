@@ -1,7 +1,8 @@
 class RedisStore
 
-  def self.redis host='localhost', port=6379
-    @redis ||= Redis.new(host: host, port: port)
+  def self.redis
+    uri = ENV["REDISTOGO_URL"] || "redis://localhost:6379/"
+    @redis ||= Redis.new(:url => uri)
   end
 
   def self.get key
