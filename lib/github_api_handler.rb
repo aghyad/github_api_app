@@ -1,3 +1,5 @@
+require 'redis_store'
+
 class GithubApiHandler
   include HTTParty
   base_uri 'api.github.com'

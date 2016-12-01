@@ -1,3 +1,5 @@
+require 'github_api_handler'
+
 class Search
   attr_reader :search_handler, :parsed_response,
               :response_data_items, :response_error_message
