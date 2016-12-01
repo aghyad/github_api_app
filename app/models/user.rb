@@ -3,12 +3,12 @@ class User < ActiveRecord::Base
 
   def self.from_omniauth(auth_response)
     if existing_user = where(uid: auth_response.uid).first
-      puts "\nupdating existing user\n"
+      Rails.logger.debug "\nupdating existing user\n"
       existing_user.encrypted_password = auth_response.credentials.token
       existing_user.save
       existing_user
     else
-      puts "\ncreating a new user\n"
+      Rails.logger.debug "\ncreating a new user\n"
       new_user = new
       new_user.uid = auth_response.uid
       new_user.provider = auth_response.provider

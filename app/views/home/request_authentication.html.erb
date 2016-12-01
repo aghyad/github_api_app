@@ -1,3 +1,8 @@
 <h1>Request Authentication with GitHub</h1>
 <%= render 'shared/notices_and_alerts' %>
-<%= button_to 'Login with GitHub Now', user_github_omniauth_authorize_path %>
+
+<div id='login-form'>
+  <h4>You need to login by authorizing your GitHub account. You will be redirected to GitHub website where you can continue the process. Once done successfully, you will be redirected back to this app.</h4>
+  <br>
+  <%= button_to 'Click Here to Authorize your GitHub Account', user_github_omniauth_authorize_path %>
+</div>

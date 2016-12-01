@@ -9,9 +9,15 @@ module SearchesHelper
   end
 
   def numeric_pagination_urls(search_options)
+    build_numeric_pagination_urls(1..10, 1, search_options)
+  end
+
+  def build_numeric_pagination_urls(range=1..10, steps=1, search_options)
     [].tap do |arr|
-      (1..10).each do |num|
-        arr << [ num, build_pagination_numeric_url(search_options, num) ]
+      range.each do |num|
+        if num % steps == 0
+          arr << [ num, build_pagination_numeric_url(search_options, num) ]
+        end
       end
     end
   end
@@ -30,8 +36,12 @@ module SearchesHelper
     return [] if search_options.blank?
     new_search_options = search_options
     new_search_options[:order] = (search_options[:order]=='desc' ? 'asc' : 'desc')
+    # [
+    #   (search_options[:order]=='desc' ? 'Stars [Desc]' : 'Stars [Asc]'),
+    #   build_pagination_numeric_url(new_search_options, 1)
+    # ]
     [
-      (search_options[:order]=='desc' ? 'Stars [Desc]' : 'Stars [Asc]'),
+      'Stars',
       build_pagination_numeric_url(new_search_options, 1)
     ]
   end

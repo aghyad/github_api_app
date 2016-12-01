@@ -2,44 +2,39 @@
 
 <%= render 'shared/notices_and_alerts' %>
 
-<%= form_tag('/search', method: 'get') do %>
-  <%= label_tag(:q, "Search GitHub for:") %>
-  <%= text_field_tag(:q) %>
-  <%= submit_tag("Search") %>
-<% end %>
+<div id='search-form'>
+  <%= form_tag('/search', method: 'get') do %>
+    <%= label_tag(:q, "Search GitHub for:") %>
+    <%= text_field_tag(:q) %>
+    <%= submit_tag("Search") %>
+  <% end %>
+</div>
 
 <% unless @error %>
-  <br><br>
   <% if @search_keyword %>
-    <table>
-      <tr>
-        <td><%= "Searching GitHub repos for: #{@search_keyword.inspect}" %></td>
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        <% if @items.present? || @search_keyword.present? %>
-          <td>
-            <%= form_tag('/search', method: 'get') do %>
-              <%= label_tag "Filter by Language:" %>
-              <%= select_tag :language, options_for_select(@language_filters, @language_filter) %>
-              <%= hidden_field_tag :q, @search_keyword %>
-              <%= submit_tag("Filter") %>
-            <% end %>
-          </td>
-        <% end %>
-
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-
-        <td><%= link_to_if (@page.to_i > 1), '<< Previous', previous_url(@search_options) %></td>
-        <% numeric_pagination_urls(@search_options).each do |url| %>
-          <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-          <td><%= link_to_unless (url[0].to_i == @page.to_i), url[0], url[1] %></td>
-        <% end %>
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        <td><%= link_to 'Next >>', next_url(@search_options) %></td>
-      </tr>
-    </table>
-    <br>
+    <div id='filters-form'>
+      <table>
+        <tr>
+          <td><b><%= "Searching GitHub for:" %></b> <i><b><%= "#{@search_keyword.inspect}" %></b></i></td>
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+          <% if @items.present? || @search_keyword.present? %>
+            <td>
+              <%= form_tag('/search', method: 'get') do %>
+                <%= label_tag "Filter by Language:" %>
+                <%= select_tag :language, options_for_select(@language_filters, @language_filter) %>
+                <%= hidden_field_tag :q, @search_keyword %>
+                <%= submit_tag("Filter") %>
+              <% end %>
+            </td>
+          <% end %>
+        </tr>
+      </table>
+    </div>
+  <% else %>
+    <br><br>
   <% end %>
+
+  <%= render partial: 'shared/pagination', locals: { search_options: @search_options, search_keyword: @search_keyword} %>
 
   <table class="table table-striped">
     <th>Repo Name</th>
@@ -48,7 +43,6 @@
     <th><%= build_stars_text_and_url(@search_options) %></th>
     <th>Watchers</th>
     <th>Forks</th>
-    <th>Open Issues</th>
     <th>Private?</th>
     <th>Description</th>
     <% @items.each do |item| %>
@@ -59,15 +53,15 @@
         <td><%= item["stargazers_count"] %></td>
         <td><%= item["watchers_count"] %></td>
         <td><%= item["forks_count"] %></td>
-        <td><%= item["open_issues_count"] %></td>
-        <td><%= item["private"] %></td>
+        <td><%= (item["private"] ? 'Private' : 'Public') %></td>
         <td><%= item['description'] %></td>
       </tr>
     <% end if @items.present? %>
   </table>
 
   <% if @items.blank? %>
-    <h5>No repos were found</h5>
+    <div id='no-content'><h5>No content were found</h5></div>
+  <% else %>
+    <%= render(partial: 'shared/pagination', locals: { search_options: @search_options, search_keyword: @search_keyword}) if @items.size > 9 %>
   <% end %>
-
 <% end %>
