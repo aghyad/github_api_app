@@ -48,6 +48,33 @@
     </li>
   </ul>
 
+
+  <br>
+  <h4>Environment Variables</h4>
+  <h5>Redis Server:</h5>
+  <ul>
+    <li> You need to have Redis working in both development and production modes.</li>
+    <li> In development mode: Redis server is set by default to be "redis://localhost:6379/"</li>
+    <li> In production mode: <br>
+      - if you are deploying to Heroku: make sure your Redis server url is set in the env var <b>REDISTOGO_URL</b> - If you install RedisToGo Add-on, you will have that variable added by default.<br>
+      - however, if you are not deploying on Herko, you need to set instead 2 variables:<br>
+      <b>HEROKU_DEPLOYMENT</b> --> set it to false<br>
+      <b>REDIS_URL</b> --> set it to the Redis server URL you have for that non-heroku deployment<br>
+    </li>
+  </ul>
+  <h5>PostgreSQL:</h5>
+  <ul>
+    <li> In development mode:<br>
+      - database name is <i>github_api_app_development</i> <br>
+      - no database password is need to be set
+    </li>
+    <li> In production mode:<br>
+      - database name is <i>github_api_app_production</i> <br>
+      - database username is set to the value <b><i>github_api_app</i></b> <br>
+      - database password need to be set (if any exists) in env var <b>GITHUB_API_APP_DATABASE_PASSWORD</b> <br>
+    </li>
+  </ul>
+
   <br>
   <h4>Credits</h4>
   <h5>

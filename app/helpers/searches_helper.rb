@@ -36,12 +36,8 @@ module SearchesHelper
     return [] if search_options.blank?
     new_search_options = search_options
     new_search_options[:order] = (search_options[:order]=='desc' ? 'asc' : 'desc')
-    # [
-    #   (search_options[:order]=='desc' ? 'Stars [Desc]' : 'Stars [Asc]'),
-    #   build_pagination_numeric_url(new_search_options, 1)
-    # ]
     [
-      'Stars',
+      "Stars<img src=\"icons/#{(search_options[:order]=='desc' ? 'asc' : 'desc')}-order.png\" style=\"width:10px\"></img>",
       build_pagination_numeric_url(new_search_options, 1)
     ]
   end
