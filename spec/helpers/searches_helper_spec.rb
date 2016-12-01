@@ -31,7 +31,7 @@ RSpec.describe SearchesHelper, type: :helper do
   describe "stars_ordering_url" do
     it "return the correct stars header name and its url value" do
       expect(helper.stars_ordering_url(search_options).inspect).to eq(
-        "[\"Stars\", \"/search?q=something&page=1&language=Ruby&sort=stars&order=asc\"]"
+        "[\"Stars<img src=\\\"icons/desc-order.png\\\" style=\\\"width:10px\\\"></img>\", \"/search?q=something&page=1&language=Ruby&sort=stars&order=asc\"]"
       )
     end
   end
@@ -40,7 +40,7 @@ RSpec.describe SearchesHelper, type: :helper do
     context "when search_options is passed correctly" do
       it "should generate the correct stars' header url" do
         expect(helper.build_stars_text_and_url(search_options)).to eq(
-          '<a href="/search?q=something&amp;page=1&amp;language=Ruby&amp;sort=stars&amp;order=asc">Stars</a>'
+          "<a href=\"/search?q=something&amp;page=1&amp;language=Ruby&amp;sort=stars&amp;order=asc\">Stars<img src=\"icons/desc-order.png\" style=\"width:10px\"></img></a>"
         )
       end
     end
