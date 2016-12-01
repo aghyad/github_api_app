@@ -1,34 +1,50 @@
-<h1>About This Application</h1>
-
 <%= render 'shared/notices_and_alerts' %>
 
-<p>Using the GitHub Search API, implement a web app that queries repositories based on user input and displays the following data / options:</p>
+<div id='login-form'>
+  <h4>What is this application?</h4>
+  <p>This application is intended to be used used with the GitHub Search API. The application queries repositories based on user input and displays the following data / options:</p>
+  <ul>
+    <li> A list of the results along with the programming language for that repo</li>
+    <li> A filtering of the results based on the languages returned (can use AJAX or make separate requests)</li>
+    <li> Sort by stars in either asc or desc order</li>
+    <li> Pagination, when available</li>
+    <li> Persist the user's information upon logging in to the app in a DB</li>
+  </ul>
 
-<h4>Business Requirements:</h4>
-<ul>
-  <li> A list of the results along with the programming language for that repo</li>
-  <li> A filtering of the results based on the languages returned (can use AJAX or make separate requests)</li>
-  <li> Sort by stars in either asc or desc order</li>
-  <li> Pagination, if available</li>
-  <li> Persist the user's information upon logging in to the app in a DB</li>
-</ul>
+  <br>
+  <h4>Notes about the application</h4>
+  <ul>
+    <li> You will need a GitHub account to be able to log in and use the search functionality successfully.</li>
+    <li> It should be mentioned that all search results are extracted from GitHub's API, which limits the number of requests per minute (no more than 30 req/min). Also GitHub's API limits the size of responses to 30 entries, and enforces pagination.</li>
+    <li> Due to pagination being enforced on GitHub API, every pagination request on this application's results page is treated as a separate request. This way we make sure users can get search results as existing in the source API.</li>
+    <li> Due to the boundaries around GitHub search API, every search is being cached to reduce the number of requests. So the first time you do a search, the viewed results are stoed (for 5 minutes). If you search for the same keyword within 5 mins of your previous search, you will notice an improvement in response time (since it pulls the response from the cache).</li>
+    <li> Another limitation in GitHub API appears when trying to request results entires above 1000 results. You will notice when trying to request results from higher page numbers (like 50) that GitHub returns an error indicating a limitation for searches.</li>
+    <li> You can sort your results based on repositories' 'Stars', in descending or ascending orders. Also, you can filter results, separately per page, by repositories' programming language.</li>
+  </ul>
 
-<h4>Technical Requirements:</h4>
-<ul>
-  <li> Use Ruby on Rails as backend app.</li>
-  <li> Push code to GitHub public repo</li>
-  <li> While the GitHub search API is public and can be used without authentication, you must authenticate your user and make authenticated requests. Use oauth.</li>
-  <li> It must be deployed to either a micro EC2 instance or Heroku Instance</li>
-  <li> You must persist some data in a database. Ideally, this would be the user's information that comes back from their API after authenticating with OAuth 2</li>
-</ul>
+  <br>
+  <h4>Technical notes about the application</h4>
+  <ul>
+    <li> This app uses Ruby (v. 2.3.1) on Rails (v. 4.2.7) as backend web framework, and uses bootstrap in rails views.</li>
+    <li> This app uses PostgreSQL as its databases. It also uses Redis as a reliable store to cache GitHub API responses.</li>
+    <li> While the GitHub search API is public and can be used without authentication, all users' requests are authenticated using users' oauth credentials derived fom GitHub. So, user's information that comes back from his/her API after authenticating with OAuth 2 is being stored in the database.</li>
+    <li> RSpec is being used as the testing library for the ruby code in this application.</li>
+    <li> The code is available here: <%= link_to "aghyad/github_api_app", "https://github.com/aghyad/github_api_app", target: '_blank' %></li>
+  </ul>
 
-<p>Everything else is up to you and you are free to use any tools / libaries you need to get the job done.</p>
-
-<h4>Things we look for:</h4>
-<ul>
-  <li> Code quality</li>
-  <li> Specs / Tests</li>
-  <li> Use of tools / gems / etc</li>
-  <li> Speed of completion (On average, people get it knocked out in 3 days max)</li>
-  <li> Anything you think will make your app special. Extra credit is always good.</li>
-</ul>
+  <br>
+  <h4>How to run this application locally</h4>
+  <ul>
+    <li> Clone the repository to your local environment.</li>
+    <li> <i>$ cd inside/rails/app/path</i></li>
+    <li> Make sure you have Ruby (v. 2.3.1) on Rails (v. 4.2.7) installed. You can also use ruby v. 2.2 if you have it installed.</li>
+    <li> To install all application's gems: <i>$ bundle install</i></li>
+    <li> Then create application's databases: <i>$ bundle exec rake db:create</i></li>
+    <li> Then, application's tables: <i>$ bundle exec rake db:migrate</i></li>
+    <li> Finally, you can start the rails server with: <i>$ rails s</i></li>
+    <li>To run all specs:<br>
+      <i>Stop rails server, if running, that's by doing (ctrl+c), and run: $ cd inside/rails/app/path</i><br>
+      <i>Then: $ bundle exec rspec spec</i>
+    </li>
+  </ul>
+</div>
