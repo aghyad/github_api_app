@@ -5,7 +5,7 @@
   <p>This application is intended to be used used with the GitHub Search API. The application queries repositories based on user input and displays the following data / options:</p>
   <ul>
     <li> A list of the results along with the programming language for that repo</li>
-    <li> A filtering of the results based on the languages returned (can use AJAX or make separate requests)</li>
+    <li> A filtering of the results based on the languages returned</li>
     <li> Sort by stars in either asc or desc order</li>
     <li> Pagination, when available</li>
     <li> Persist the user's information upon logging in to the app in a DB</li>
@@ -47,4 +47,10 @@
       <i>Then: $ bundle exec rspec spec</i>
     </li>
   </ul>
+
+  <br>
+  <h4>Credits</h4>
+  <h5>
+    This idea and functionality behind this application was inspired fully by: <%= link_to "https://github.com/rethinkbooks/interview-project/blob/master/README.md", "https://github.com/rethinkbooks/interview-project/blob/master/README.md", target: '_blank' %>
+  </h5>
 </div>
