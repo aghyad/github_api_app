@@ -34,7 +34,6 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.5'
   gem 'factory_girl_rails'
   gem 'guard-rspec'
-  # gem 'spork-rails', github: 'sporkrb/spork-rails'
   gem 'annotate', ">=2.6.0"
   gem 'hirb'
 end
@@ -48,11 +47,6 @@ end
 
 group :test do
   gem 'faker' , '~> 1.1.2'
-#   # gem 'capybara' , '~> 2.1.0'
-#   gem 'database_cleaner' , '~> 1.0.1'
-#   gem 'launchy' , '~> 2.3.0'
-#   gem 'selenium-webdriver' , '~> 2.35.1'
-#   gem 'shoulda-matchers'
 end
 
 gem 'rails_12factor', group: :production
